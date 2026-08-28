@@ -1,9 +1,8 @@
 // 站点级静态配置 —— 首页 / 关于页 / agent.json / sitemap 共享
 export const SITE = {
   name: '岁华纪丽',
-  domain: 'suihuajili.com',
-  altDomain: 'suihuajili.wang',
-  url: 'https://suihuajili.com',
+  domain: 'suihuajili.cn',
+  url: 'https://suihuajili.cn',
   tagline: '个人数字名片 · 内容阵地 · 搜索引擎可寻',
   description:
     '一个完全属于你的内容阵地。让搜索引擎找到你，让陌生人在三分钟内读懂你——你是谁、在做什么、能提供什么价值。',

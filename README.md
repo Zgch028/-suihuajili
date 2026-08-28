@@ -1,6 +1,6 @@
 # 岁华纪丽网 · 个人数字名片网站（Astro）
 
-基于设计稿落地的可运行 Astro 项目骨架。域名 `suihuajili.com` / `suihuajili.wang`，
+基于设计稿落地的可运行 Astro 项目骨架。域名 `suihuajili.cn`（单域名方案），
 核心目的：数字资产 + 搜索引擎引流 + 完整个人名片；并内置 **AI Agent 认证入口**（`/agent.json`）。
 
 ## 技术栈
@@ -92,7 +92,7 @@ order: 1                     # 首页系列网格排序
 
 ## 域名与部署
 
-- **主域名** `suihuajili.com`；**`suihuajili.wang` 在 DNS/CDN 层做全站 301 跳转**到主域名（品牌保护 + 防抢注）。
+- **主域名** `suihuajili.cn`（单域名方案；如需品牌保护可另购 `.com` / `.wang` 在 Cloudflare 建 301 跳转到 `.cn`）。
 - 部署：海外 Cloudflare Pages / Vercel；国内备案后切又拍云 / 七牛 + 自建。
 - 上线后把 `astro.config.mjs` 的 `site` 与 `src/data/site.ts` 的 `url` 改成真实域名，重新 `build`。
 
