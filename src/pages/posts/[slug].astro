@@ -1,0 +1,155 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import { SITE } from '../../data/site';
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('posts');
+  const series = await getCollection('series');
+  return posts.map((post) => {
+    const s = series.find((x) => x.slug === post.data.series);
+    return {
+      params: { slug: post.slug },
+      props: {
+        post,
+        seriesTitle: s?.data.title ?? '',
+        seriesSlug: post.data.series,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { post, seriesTitle, seriesSlug } = Astro.props;
+const { Content } = await render(post);
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  datePublished: post.data.date.toISOString(),
+  description: post.data.description,
+  author: { '@type': 'Person', name: SITE.author.name },
+  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  mainEntityOfPage: new URL(`/posts/${post.slug}`, SITE.url).href,
+};
+---
+
+<BaseLayout
+  title={`${post.data.title}｜${SITE.name}`}
+  description={post.data.description}
+  keywords={post.data.tags}
+  ogType="article"
+>
+  <JsonLd data={articleJsonLd} />
+  <Nav active={seriesTitle} variant="minimal" />
+
+  <article class="post">
+    <div class="container post__inner">
+      <a class="post__crumb" href={`/series/${seriesSlug}`}>← {seriesTitle}</a>
+      <h1 class="post__title">{post.data.title}</h1>
+      <div class="post__meta">
+        <span>{post.data.date.toISOString().slice(0, 10)}</span>
+        {
+          post.data.volume && (
+            <span class="post__tag post__tag--volume">{post.data.volume}</span>
+          )
+        }
+        {
+          post.data.tags.map((t) => (
+            <span class="post__tag">#{t}</span>
+          ))
+        }
+      </div>
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .post {
+    padding: 56px 0 72px;
+    background: #fff;
+  }
+  .post__inner {
+    max-width: 760px;
+  }
+  .post__crumb {
+    font-size: 14px;
+    color: var(--brand-red);
+    font-weight: 500;
+  }
+  .post__title {
+    font-family: var(--font-serif);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+    margin: 16px 0 12px;
+  }
+  .post__meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .post__tag {
+    color: var(--brand-red);
+  }
+  .post__tag--volume {
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .prose {
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--ink);
+  }
+  .prose :global(p) {
+    margin-bottom: 1.1em;
+  }
+  .prose :global(h2) {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    font-weight: 700;
+    margin: 1.4em 0 0.6em;
+  }
+  .prose :global(h3) {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 700;
+    margin: 1.2em 0 0.5em;
+  }
+  .prose :global(blockquote) {
+    border-left: 3px solid var(--brand-red);
+    padding-left: 16px;
+    color: var(--ink-soft);
+    margin: 1em 0;
+  }
+  .prose :global(ul),
+  .prose :global(ol) {
+    padding-left: 1.4em;
+    margin-bottom: 1em;
+  }
+  .prose :global(li) {
+    margin-bottom: 0.4em;
+  }
+  .prose :global(pre) {
+    background: var(--navy);
+    color: #9fe6b0;
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    overflow-x: auto;
+    font-size: 14px;
+  }
+</style>

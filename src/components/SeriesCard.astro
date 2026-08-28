@@ -1,0 +1,62 @@
+---
+// 首页系列网格卡片。tint 由调用方按设计稿淡彩映射传入（CSS 变量名）
+interface Props {
+  title: string;
+  tag: string;
+  description: string;
+  href: string;
+  tint: string; // 例如 'var(--tint-1)'
+}
+const { title, tag, description, href, tint } = Astro.props;
+---
+
+<a class="series-card" href={href} style={`background:${tint}`}>
+  <span class="series-card__name">{title}</span>
+  <span class="series-card__tag">{tag}</span>
+  <span class="series-card__desc">{description}</span>
+  <span class="series-card__link">查看系列 →</span>
+</a>
+
+<style>
+  .series-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 392px;
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .series-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(10, 21, 48, 0.08);
+  }
+  .series-card__name {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .series-card__tag {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--brand-red);
+  }
+  .series-card__desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .series-card__link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--brand-red);
+    margin-top: 4px;
+  }
+  @media (max-width: 768px) {
+    .series-card {
+      width: 100%;
+    }
+  }
+</style>

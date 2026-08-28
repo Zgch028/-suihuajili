@@ -1,0 +1,41 @@
+---
+import { SITE, NAV_LINKS } from '../data/site';
+
+interface Props {
+  active?: string; // 当前系列名或「首页」「关于我」
+  variant?: 'full' | 'minimal'; // 首页完整导航 / 子页仅 logo + 返回
+}
+const { active = '', variant = 'full' } = Astro.props;
+---
+
+<header class="nav">
+  <a class="nav__logo" href="/">{SITE.name}</a>
+
+  {
+    variant === 'full' && (
+      <nav class="nav__links">
+        {NAV_LINKS.map((l) => (
+          <a
+            class={`nav__link ${l.label === active ? 'nav__link--active' : ''}`}
+            href={l.href}
+          >
+            {l.label}
+          </a>
+        ))}
+      </nav>
+    )
+  }
+
+  <div class="nav__right">
+    {
+      variant === 'full' && (
+        <a class="search-pill" href="/search">
+          搜索内容 / 文章…
+        </a>
+      )
+    }
+    <a class="btn btn--primary btn--sm" href={variant === 'full' ? '/about' : '/'}>
+      {variant === 'full' ? '关于我' : '返回首页'}
+    </a>
+  </div>
+</header>

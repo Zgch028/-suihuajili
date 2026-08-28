@@ -1,0 +1,136 @@
+---
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import { SITE } from '../../data/site';
+
+export const getStaticPaths = (async () => {
+  const series = await getCollection('series');
+  const posts = await getCollection('posts');
+  return series.map((s) => ({
+    params: { slug: s.slug },
+    props: {
+      series: s,
+      posts: posts
+        .filter((p) => p.data.series === s.slug)
+        .sort((a, b) => b.data.date.getTime() - a.data.date.getTime()),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { series, posts } = Astro.props;
+
+const collectionJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: series.data.title,
+  description: series.data.seoDescription,
+  url: new URL(`/series/${series.slug}`, SITE.url).href,
+  isPartOf: { '@type': 'WebSite', name: SITE.name, url: SITE.url },
+};
+---
+
+<BaseLayout
+  title={series.data.seoTitle}
+  description={series.data.seoDescription}
+  keywords={series.data.seoKeywords}
+>
+  <JsonLd data={collectionJsonLd} />
+  <Nav active={series.data.title} variant="minimal" />
+
+  <section class="series-header">
+    <div class="container">
+      <span class="series-header__eyebrow">{series.data.eyebrow}</span>
+      <h1 class="series-header__title">{series.data.title}</h1>
+      <p class="series-header__sub">{series.data.description}</p>
+      <div class="seo-panel">
+        <span class="seo-panel__label">本页 SEO 元信息（搜索引擎可见）</span>
+        <div>title：{series.data.seoTitle}</div>
+        <div>description：{series.data.seoDescription}</div>
+        <div>keywords：{series.data.seoKeywords.join(', ')}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="container">
+      <div class="post-list">
+        {
+          posts.length > 0 ? (
+            posts.map((p) => (
+              <ArticleCard
+                title={p.data.title}
+                description={p.data.description}
+                date={p.data.date}
+                volume={p.data.volume}
+                href={`/posts/${p.slug}`}
+              />
+            ))
+          ) : (
+            <p class="post-empty">该系列文章正在精选整理中，敬请期待。</p>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .series-header {
+    background: var(--navy);
+    padding: 64px 0 48px;
+  }
+  .series-header__eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--gold);
+  }
+  .series-header__title {
+    font-family: var(--font-serif);
+    font-size: 48px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -1px;
+    margin-top: 8px;
+  }
+  .series-header__sub {
+    font-size: 16px;
+    color: #c9c4ba;
+    line-height: 1.6;
+    margin-top: 16px;
+    max-width: 720px;
+  }
+  .seo-panel {
+    margin-top: 24px;
+    background: var(--navy-deep);
+    border-radius: var(--radius);
+    padding: 20px;
+    font-size: 13px;
+    color: #c9c4ba;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .seo-panel__label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--gold);
+  }
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .post-empty {
+    color: var(--ink-soft);
+    font-size: 15px;
+  }
+</style>

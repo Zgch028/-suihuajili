@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+const q = Astro.url.searchParams.get('q') ?? '';
+---
+
+<BaseLayout
+  title="站内搜索｜岁华纪丽"
+  description="搜索岁华纪丽的全部内容：文章、系列与关键词"
+>
+  <Nav variant="minimal" />
+  <section class="section">
+    <div class="container search">
+      <h1 class="search__title">站内搜索</h1>
+      <form class="search__form" action="/search" method="get">
+        <input
+          class="search__input"
+          type="text"
+          name="q"
+          value={q}
+          placeholder="搜索文章、系列、关键词…"
+          autofocus
+        />
+        <button class="btn btn--primary btn--sm" type="submit">搜索</button>
+      </form>
+      <div id="results" class="search__results"></div>
+      <p id="hint" class="search__hint">
+        提示：搜索索引在 <code>npm run build</code> 后由 Pagefind 自动生成；开发模式（<code>npm run dev</code>）下索引尚未生成，可直接浏览各系列页。
+      </p>
+    </div>
+  </section>
+  <Footer />
+</BaseLayout>
+
+<script is:inline>
+  (async () => {
+    const params = new URLSearchParams(location.search);
+    const q = params.get('q') || '';
+    if (!q) return;
+    try {
+      const pagefind = await import('/pagefind/pagefind.js');
+      await pagefind.options({ basePath: '/pagefind/' });
+      const search = await pagefind.search(q);
+      const results = await Promise.all(
+        search.results.slice(0, 20).map((r) => r.data())
+      );
+      const box = document.getElementById('results');
+      if (!results.length) {
+        box.innerHTML = '<p class="search__empty">没有找到相关内容。</p>';
+        return;
+      }
+      box.innerHTML = results
+        .map(
+          (r) =>
+            `<a class="search__result" href="${r.url}"><span class="search__result-title">${r.meta?.title || r.url}</span><span class="search__result-excerpt">${r.excerpt || ''}</span></a>`
+        )
+        .join('');
+      document.getElementById('hint')?.remove();
+    } catch (e) {
+      // dev 模式无索引，保留提示即可
+      console.warn('Pagefind 索引尚未生成（需 build 后预览）', e);
+    }
+  })();
+</script>
+
+<style>
+  .search {
+    max-width: 760px;
+  }
+  .search__title {
+    font-family: var(--font-serif);
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  .search__form {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .search__input {
+    flex: 1;
+    height: 44px;
+    padding: 0 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-family: var(--font-sans);
+    outline: none;
+  }
+  .search__input:focus {
+    border-color: var(--brand-red);
+  }
+  .search__results {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .search__result {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 20px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .search__result:hover {
+    border-color: var(--brand-red);
+  }
+  .search__result-title {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .search__result-excerpt {
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+  .search__hint {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 16px;
+  }
+  .search__hint code {
+    background: var(--paper);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .search__empty {
+    color: var(--ink-soft);
+  }
+</style>

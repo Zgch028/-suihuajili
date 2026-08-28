@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { SITE } from '../data/site';
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.author.name,
+  jobTitle: SITE.author.jobTitle,
+  url: SITE.url,
+  sameAs: [
+    `公众号:${SITE.author.officialAccount}`,
+    `视频号:${SITE.author.videoAccount}`,
+    `微信:${SITE.author.wechat}`,
+  ],
+};
+---
+
+<BaseLayout
+  title={`关于岁华纪丽 · ${SITE.author.name}`}
+  description={SITE.author.bio}
+  keywords={['赵国成', '岁华纪丽', '龙山大佛', '宋文化', '自媒体矩阵', '联系方式']}
+>
+  <JsonLd data={personJsonLd} />
+  <Nav active="关于我" variant="minimal" />
+
+  <section class="about-header">
+    <div class="container">
+      <span class="about-header__eyebrow">ABOUT</span>
+      <h1 class="about-header__title">关于岁华纪丽</h1>
+      <p class="about-header__sub">
+        {SITE.author.name} · 公众号「{SITE.author.officialAccount}」主理人 · 视频号「{SITE.author.videoAccount}」
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="container about-content">
+      <div class="card" id="intro">
+        <h2 class="card__title">个人介绍</h2>
+        <p class="card__body">{SITE.author.bio}</p>
+      </div>
+
+      <div class="card" id="career">
+        <h2 class="card__title">职业背景</h2>
+        <p class="card__body">{SITE.author.career}</p>
+      </div>
+
+      <div class="card" id="matrix">
+        <h2 class="card__title">自媒体矩阵</h2>
+        <div class="matrix-row">
+          {SITE.matrix.map((m) => <span class="chip">{m.label}</span>)}
+        </div>
+      </div>
+
+      <div class="card" id="contact">
+        <h2 class="card__title">联系方式</h2>
+        <p class="card__body">
+          微信：{SITE.author.wechat}（备注「岁华纪丽」）。商务合作、内容转载与线下活动，请通过公众号「{SITE.author.officialAccount}」后台留言，我看到后会第一时间回复。
+        </p>
+      </div>
+
+      <div class="agent-card">
+        <span class="agent-card__label">AI Agent 认证标准入口 · /agent.json</span>
+        <pre class="agent-card__code">{JSON.stringify(personJsonLd, null, 2)}</pre>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .about-header {
+    background: var(--navy);
+    padding: 72px 0 56px;
+  }
+  .about-header__eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--gold);
+  }
+  .about-header__title {
+    font-family: var(--font-serif);
+    font-size: 48px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -1px;
+    margin-top: 8px;
+  }
+  .about-header__sub {
+    font-size: 16px;
+    color: #c9c4ba;
+    margin-top: 16px;
+  }
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .card__title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .card__body {
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.75;
+  }
+  .matrix-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .agent-card {
+    background: var(--navy);
+    border-radius: var(--radius);
+    padding: 32px;
+  }
+  .agent-card__label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--gold);
+  }
+  .agent-card__code {
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.5;
+    color: #9fe6b0;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+</style>

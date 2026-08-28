@@ -1,0 +1,275 @@
+/* ============================================================
+   岁华纪丽网 · 设计令牌（提取自 Ardot 设计稿）
+   品牌色：印泥朱红 + 墨黑 navy + 暖米纸感
+   字体：  标题 思源宋体 / 正文·UI 思源黑体 / 代码 Inter
+   ============================================================ */
+:root {
+  /* 色彩 */
+  --brand-red: #b23a30;
+  --brand-red-soft: #c25247;
+  --navy: #0a1530;
+  --navy-deep: #121f44;
+  --paper: #f7f4e8;
+  --paper-warm: #faf6ec;
+  --gold: #e0b973;
+  --ink: #1a1a1a;
+  --ink-soft: #5d5b54;
+  --border: #e5e0d8;
+  --muted: #a4a097;
+  --card: #ffffff;
+
+  /* 系列卡片的淡彩底（设计稿里的低饱和色） */
+  --tint-1: #f8f5e8; /* 大宋纪丽 米 */
+  --tint-2: #fef7d6; /* 十二生肖 暖黄 */
+  --tint-3: #d9f3e1; /* 节气 绿 */
+  --tint-4: #e6e0f5; /* 一宋一词 紫 */
+  --tint-5: #fff0d4; /* 生活馆 橙 */
+  --tint-6: #dcf0fb; /* AI 蓝 */
+  --tint-7: #fde0ee; /* 视频号 粉 */
+
+  /* 几何 */
+  --radius: 12px;
+  --radius-sm: 8px;
+  --container: 1280px;
+  --gap: 24px;
+
+  /* 字体 */
+  --font-serif: 'Noto Serif SC', 'Songti SC', serif;
+  --font-sans: 'Noto Sans SC', system-ui, sans-serif;
+  --font-mono: 'Inter', ui-monospace, monospace;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--card);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* 容器 */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* 通用区块 */
+.section {
+  padding: 64px 0;
+}
+.section--paper {
+  background: var(--paper);
+}
+.section__eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--brand-red);
+  font-family: var(--font-sans);
+}
+.section__title {
+  font-family: var(--font-serif);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+  margin-top: 8px;
+}
+.section__sub {
+  font-size: 16px;
+  color: var(--ink-soft);
+  margin-top: 12px;
+  max-width: 720px;
+}
+
+/* 按钮 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s ease;
+}
+.btn:hover {
+  opacity: 0.9;
+}
+.btn--primary {
+  background: var(--brand-red);
+  color: #fff;
+}
+.btn--ghost {
+  background: #fff;
+  color: var(--navy);
+}
+.btn--sm {
+  height: 40px;
+  padding: 0 18px;
+  font-size: 14px;
+}
+
+/* 卡片 */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+/* 徽章 / 标签 */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 500;
+  background: #fff;
+  border: 1px solid var(--border);
+  color: var(--ink-soft);
+}
+
+/* 导航 */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 32px;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.nav__logo {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--brand-red);
+}
+.nav__links {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+.nav__link {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.nav__link--active {
+  color: var(--ink);
+  font-weight: 600;
+}
+.nav__right {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.search-pill {
+  display: flex;
+  align-items: center;
+  width: 200px;
+  height: 40px;
+  padding: 0 14px;
+  background: var(--paper);
+  border: 1px solid #ccc4b9;
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* 页脚 */
+.footer {
+  background: var(--paper-warm);
+  border-top: 1px solid var(--border);
+  padding: 48px 0 40px;
+}
+.footer__top {
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.footer__links {
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer__col h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.footer__col a,
+.footer__col span {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .container,
+  .nav {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .section__title {
+    font-size: 28px;
+  }
+  .nav__links {
+    display: none;
+  }
+}

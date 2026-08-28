@@ -1,0 +1,10 @@
+---
+// 机器可读结构化数据注入点（JSON-LD）
+// 设计稿差异化卖点：让 AI Agent / 搜索引擎能一次性提取认证信息
+interface Props {
+  data: Record<string, unknown> | Record<string, unknown>[];
+}
+const { data } = Astro.props;
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(data)}></script>

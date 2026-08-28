@@ -1,0 +1,37 @@
+---
+import { SITE, NAV_LINKS } from '../data/site';
+const seriesLinks = NAV_LINKS.filter((l) => l.href !== '/');
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <span class="nav__logo">{SITE.name}</span>
+        <span>{SITE.tagline} · {SITE.domain}</span>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col">
+          <h4>内容系列</h4>
+          {seriesLinks.map((l) => <a href={l.href}>{l.label}</a>)}
+        </div>
+        <div class="footer__col">
+          <h4>关于</h4>
+          <a href="/about">关于我</a>
+          <a href="/about#matrix">自媒体矩阵</a>
+          <a href="/about#contact">联系方式</a>
+        </div>
+        <div class="footer__col">
+          <h4>检索</h4>
+          <a href="/search">站内搜索</a>
+          <a href="/agent.json">AI Agent 入口</a>
+          <a href="/sitemap.xml">站点地图</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 {SITE.name} · {SITE.domain} / {SITE.altDomain}</span>
+      <span>晋ICP备 ··· 号</span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,34 @@
+---
+// 集中输出每页 SEO meta 标签 + Open Graph + canonical
+// 设计稿「SEO 字段规范」的落地点：title / description / keywords / og / canonical
+import { SITE } from '../data/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  keywords?: string[];
+  canonical: string;
+  ogType?: 'website' | 'article';
+}
+const {
+  title,
+  description = SITE.description,
+  keywords = [],
+  canonical,
+  ogType = 'website',
+} = Astro.props;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+{keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+<link rel="canonical" href={canonical} />
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:locale" content="zh_CN" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />

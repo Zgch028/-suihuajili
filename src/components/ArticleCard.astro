@@ -1,0 +1,95 @@
+---
+// 系列页 / 文章列表卡片
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  href: string;
+  volume?: string;
+}
+const { title, description, date, href, volume } = Astro.props;
+const mm = String(date.getMonth() + 1).padStart(2, '0');
+const dd = String(date.getDate()).padStart(2, '0');
+const yyyy = date.getFullYear();
+---
+
+<article class="article-card">
+  <div class="article-card__date">
+    <span class="article-card__d">{mm}-{dd}</span>
+    <span class="article-card__y">{yyyy}</span>
+  </div>
+  <div class="article-card__body">
+    {volume && <span class="article-card__volume">{volume}</span>}
+    <h3 class="article-card__title">{title}</h3>
+    <p class="article-card__excerpt">{description}</p>
+  </div>
+  <a class="article-card__link" href={href}>阅读 →</a>
+</article>
+
+<style>
+  .article-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .article-card__date {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 72px;
+    flex-shrink: 0;
+    text-align: center;
+  }
+  .article-card__d {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--brand-red);
+  }
+  .article-card__y {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .article-card__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .article-card__title {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .article-card__volume {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .article-card__excerpt {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .article-card__link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--brand-red);
+    flex-shrink: 0;
+  }
+  @media (max-width: 768px) {
+    .article-card {
+      flex-wrap: wrap;
+    }
+    .article-card__link {
+      width: 100%;
+    }
+  }
+</style>
