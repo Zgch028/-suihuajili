@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:1080px;height:1350px;}
+  .poster{position:relative;width:1080px;height:1350px;background:url('bg-liubai.png') center/cover no-repeat;
+    font-family:"Microsoft YaHei","微软雅黑",sans-serif;color:#23201c;overflow:hidden;}
+  .vline{position:absolute;left:78px;top:120px;bottom:120px;width:3px;background:#b5341f;}
+  .content{position:absolute;inset:0;padding:120px 96px 110px 120px;display:flex;flex-direction:column;}
+  .eyebrow{font-size:23px;letter-spacing:10px;color:#9a6a3a;font-weight:600;}
+  .title{font-family:"KaiTi","STKaiti","楷体",serif;font-size:126px;font-weight:700;
+    letter-spacing:10px;margin-top:22px;color:#1d1a16;}
+  .divider{width:120px;height:4px;background:#b5341f;margin:30px 0 26px;}
+  .tagline{font-size:35px;font-weight:600;letter-spacing:3px;color:#2c2823;}
+  .proposal{font-size:26px;line-height:1.75;margin-top:22px;color:#4a443c;max-width:760px;}
+  .foot-card{margin-top:auto;background:rgba(255,252,245,.92);padding:30px 38px;border-radius:16px;
+    box-shadow:0 8px 24px rgba(0,0,0,.12);}
+  .foot{width:100%;display:flex;align-items:center;justify-content:space-between;gap:30px;}
+  .motto{font-family:"KaiTi","楷体",serif;font-size:31px;line-height:1.65;color:#2c2823;letter-spacing:1px;}
+  .url{font-size:26px;letter-spacing:2px;color:#7c5c36;margin-top:16px;font-weight:700;}
+  .qr{width:150px;height:150px;border:5px solid #23201c;border-radius:12px;background:#fff;
+    box-shadow:0 8px 20px rgba(0,0,0,.18);}
+  .seal{position:absolute;right:96px;bottom:430px;width:118px;height:118px;background:#b5341f;
+    border-radius:10px;display:grid;grid-template-columns:1fr 1fr;place-items:center;color:#fff;
+    font-family:"KaiTi","楷体",serif;font-size:40px;font-weight:700;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);transform:rotate(-4deg);}
+</style>
+</head>
+<body>
+<div class="poster">
+  <div class="vline"></div>
+  <div class="content">
+    <div class="eyebrow">岁 华 纪 丽 · 文 化 基 因</div>
+    <div class="title">岁华纪丽</div>
+    <div class="divider"></div>
+    <div class="tagline">一份记录历史温情的笔记</div>
+    <div class="proposal">为今人做一份"纪丽"的生活提案，<br>让历史照亮现代生活。</div>
+    <div class="foot-card">
+      <div class="foot">
+        <div>
+          <div class="motto">岁华纪丽，<br>记岁时之美好，<br>存历史之温度。</div>
+          <div class="url">suihuajili.cn</div>
+        </div>
+        <img class="qr" src="qr.png" alt="QR">
+      </div>
+    </div>
+  </div>
+  <div class="seal"><span>岁</span><span>华</span><span>纪</span><span>丽</span></div>
+</div>
+</body>
+</html>

@@ -8,12 +8,14 @@ interface Props {
   description?: string;
   keywords?: string[];
   ogType?: 'website' | 'article';
+  ogImage?: string;
 }
 const {
   title,
   description = SITE.description,
   keywords = [],
   ogType = 'website',
+  ogImage,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
@@ -37,6 +39,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
       keywords={keywords}
       canonical={canonical}
       ogType={ogType}
+      ogImage={ogImage}
     />
   </head>
   <body>
