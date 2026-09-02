@@ -46,9 +46,13 @@ const personJsonLd = {
   <!-- Hero -->
   <section class="hero">
     <div class="container hero__inner">
-      <span class="hero__eyebrow">{SITE.tagline}</span>
+      <span class="hero__eyebrow">岁华纪丽的文化基因</span>
       <h1 class="hero__title">{SITE.name}</h1>
-      <p class="hero__sub">{SITE.description}</p>
+      <p class="hero__sub">
+        一份记录历史温情的笔记。<br />
+        为今人做一份“纪丽”的生活提案，让历史照亮现代生活。
+      </p>
+      <p class="hero__motto">岁华纪丽，记岁时之美好，存历史之温度。</p>
       <div class="hero__tags">
         <span class="tag">数字资产</span>
         <span class="tag">搜索引擎引流</span>
@@ -160,10 +164,25 @@ const personJsonLd = {
 
 <style>
   .hero {
-    background: var(--navy);
-    padding: 96px 0 88px;
+    position: relative;
+    background: var(--navy) url('/hero-bg.jpg') center / cover no-repeat;
+    padding: 110px 0 96px;
+    isolation: isolate;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(16, 24, 45, 0.62) 0%,
+      rgba(16, 24, 45, 0.55) 40%,
+      rgba(16, 24, 45, 0.72) 100%
+    );
+    z-index: -1;
   }
   .hero__inner {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -183,18 +202,30 @@ const personJsonLd = {
     color: #fff;
     letter-spacing: -2px;
     line-height: 1.05;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
   }
   .hero__sub {
     font-size: 18px;
-    color: #c9c4ba;
-    max-width: 660px;
-    line-height: 1.6;
+    color: #f2efe6;
+    max-width: 680px;
+    line-height: 1.8;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.45);
+  }
+  .hero__motto {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-top: -6px;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
   }
   .hero__tags {
+    position: relative;
     display: flex;
     gap: 16px;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 8px;
   }
   .tag {
     padding: 6px 14px;
